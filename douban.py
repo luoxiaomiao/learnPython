@@ -23,7 +23,7 @@ def find_movies(res):
     ranks = []
     targets = soup.find_all("span", class_='rating_num')
     for each in targets:
-        ranks.append('评分：%s' % each.text)
+        ranks.append('评分：%s' % each.text)  # 字符串格式符%s
 
     # 资料
     messages = []
@@ -44,8 +44,11 @@ def find_movies(res):
 # 找出一共有多少个页面
 def find_depth(res):
     soup = bs4.BeautifulSoup(res.text, "html.parser")
+    # 一个标签的上个节点或者下一个节点通常都是空格
+    # 连续两次才能拿到相邻的节点
+    # 此行代码的意思是获取一个class = "next" 的上上个节点，所以就是上个<a href="xxx">10</a> a标签
     depth = soup.find('span', class_="next").previous_sibling.previous_sibling.text
-    return int(depth)
+    return int(depth)  # 10
 
 
 def main():
